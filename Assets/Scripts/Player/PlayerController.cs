@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float runSpeed;
     public bool isRun;
+    public float runStamina;
     public float jumpPower;
+    public float needStamina;
     public float fallMultiplier;
     public float gravityMultiplier;
     private Vector2 curMovementInput;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool canLook = true;
 
     private Rigidbody _rigidbody;
+    private Coroutine staminaCoroutine;
 
     private void Awake()
     {
@@ -100,13 +103,26 @@ public class PlayerController : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Performed && CharacterManager.Instance.Player.condition.curStamina() >= needStamina)
         {
             isRun = true;
+
+            if (staminaCoroutine != null)
+            {
+                StopCoroutine(staminaCoroutine);
+            }
+
+            staminaCoroutine = StartCoroutine(UseStaminaTime());
         }
-        else if (context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled && CharacterManager.Instance.Player.condition.curStamina() < needStamina)
         {
             isRun = false;
+
+            if (staminaCoroutine != null)
+            {
+                StopCoroutine(staminaCoroutine);
+                staminaCoroutine = null;
+            }
         }
     }
 
@@ -119,12 +135,26 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
-            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            if (CharacterManager.Instance.Player.condition.curStamina() >= needStamina)
+            {
+                _rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+
+                CharacterManager.Instance.Player.condition.UseStamina(needStamina);
+            }
         }
     }
 
     bool IsGrounded()
     {
         return Physics.SphereCast(transform.position, 0.5f, Vector3.down, out _, 1.6f, groundLayerMask);
+    }
+
+    private IEnumerator UseStaminaTime()
+    {
+        while (isRun)
+        {
+            CharacterManager.Instance.Player.condition.UseStamina(runStamina);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

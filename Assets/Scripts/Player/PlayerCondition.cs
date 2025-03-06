@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCondition : MonoBehaviour
+{
+    public UICondition uiCondition;
+
+    Condition health { get { return uiCondition.health; } }
+    Condition stamina { get { return uiCondition.stamina; } }
+
+    public float healthDecay;
+
+    void Update()
+    {
+        health.Subtract(healthDecay * Time.deltaTime);
+
+        if (!CharacterManager.Instance.Player.controller.isRun)
+        {
+            stamina.Add(stamina.passiveValue * Time.deltaTime);
+        }
+
+        if(stamina.curValue < CharacterManager.Instance.Player.controller.needStamina)
+        {
+            CharacterManager.Instance.Player.controller.isRun = false;
+        }
+
+        if (health.curValue == 0f)
+        {
+            Die();
+        }
+    }
+
+    public void Heal(float amout)
+    {
+        health.Add(amout);
+    }
+
+    public void Die()
+    {
+        Debug.Log("die");
+    }
+
+    public bool UseStamina(float amout)
+    {
+        if (stamina.curValue - amout < 0f)
+        {
+            return false;
+        }
+
+        stamina.Subtract(amout);
+        return true;
+    }
+
+    public float curStamina()
+    {
+        return stamina.curValue;
+    }
+}
