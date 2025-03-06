@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public PlayerController controller;
     public PlayerCondition condition;
+    public UIItem uiItem;
 
     public ItemData itemData;
     public Action addItem;
@@ -16,5 +17,6 @@ public class Player : MonoBehaviour
         CharacterManager.Instance.Player = this;
         controller = GetComponent<PlayerController>();
         condition = GetComponent<PlayerCondition>();
+        uiItem = GameObject.Find("UIItem")?.GetComponent<UIItem>();
     }
 }

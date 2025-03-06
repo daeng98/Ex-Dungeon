@@ -1218,6 +1218,7 @@ GameObject:
   - component: {fileID: 608377367}
   - component: {fileID: 608377366}
   - component: {fileID: 608377368}
+  - component: {fileID: 608377369}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1408,6 +1409,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3c0cc587-5d69-4c3d-a9bf-633e911c2afa
     m_ActionName: Player/Run[/Keyboard/shift]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 608377369}
+        m_TargetAssemblyTypeName: ItemUse, Assembly-CSharp
+        m_MethodName: OnUseItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7c33a398-0c51-4bea-8fc4-610b7d47cfb5
+    m_ActionName: Player/UseItem[/Keyboard/e,/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 608377368}
+        m_TargetAssemblyTypeName: Interaction, Assembly-CSharp
+        m_MethodName: OnInteractInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3670a371-120c-4f73-9daf-915f5a1bf6d6
+    m_ActionName: Player/Interaction[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1441,6 +1474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   condition: {fileID: 0}
+  uiItem: {fileID: 0}
   itemData: {fileID: 0}
 --- !u!114 &608377368
 MonoBehaviour:
@@ -1461,6 +1495,20 @@ MonoBehaviour:
     m_Bits: 512
   curInteractGameObject: {fileID: 0}
   promptText: {fileID: 1165773018}
+--- !u!114 &608377369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608377360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada404f6f9b9a2f4d87f42383ed1d1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healingPotion: {fileID: 11400000, guid: fcbed89ff8e84b443885bcca764d4dce, type: 2}
+  speedPotion: {fileID: 11400000, guid: b77f889929637274c88b2e628a8029e0, type: 2}
 --- !u!1 &661545934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,6 +2752,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d561a752f25176a4ea9a4b2cbc173c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlots:
+  - {fileID: 1939090298}
+  - {fileID: 2035173253}
 --- !u!1 &1165773016
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,6 +4028,7 @@ GameObject:
   - component: {fileID: 1939090295}
   - component: {fileID: 1939090297}
   - component: {fileID: 1939090296}
+  - component: {fileID: 1939090298}
   m_Layer: 0
   m_Name: ItemHeel
   m_TagString: Untagged
@@ -4044,6 +4096,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939090294}
   m_CullTransparentMesh: 1
+--- !u!114 &1939090298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939090294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56296f399460ecc4bbc8c3b6c93c9f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: fcbed89ff8e84b443885bcca764d4dce, type: 2}
+  stackText: {fileID: 1905947747}
+  stackCount: 0
 --- !u!1 &1963448401
 GameObject:
   m_ObjectHideFlags: 0
@@ -4160,6 +4227,7 @@ GameObject:
   - component: {fileID: 2035173250}
   - component: {fileID: 2035173252}
   - component: {fileID: 2035173251}
+  - component: {fileID: 2035173253}
   m_Layer: 0
   m_Name: ItemSpeed
   m_TagString: Untagged
@@ -4227,6 +4295,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035173249}
   m_CullTransparentMesh: 1
+--- !u!114 &2035173253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035173249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56296f399460ecc4bbc8c3b6c93c9f47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: b77f889929637274c88b2e628a8029e0, type: 2}
+  stackText: {fileID: 785884125}
+  stackCount: 0
 --- !u!1 &2061485658
 GameObject:
   m_ObjectHideFlags: 0
