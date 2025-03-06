@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed && CharacterManager.Instance.Player.condition.curStamina() >= needStamina)
+        if (context.phase == InputActionPhase.Performed)
         {
             isRun = true;
 
@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
 
             staminaCoroutine = StartCoroutine(UseStaminaTime());
         }
-        else if (context.phase == InputActionPhase.Canceled && CharacterManager.Instance.Player.condition.curStamina() < needStamina)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             isRun = false;
 
