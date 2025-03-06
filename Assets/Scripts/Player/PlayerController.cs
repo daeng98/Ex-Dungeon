@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float runSpeed;
+    public bool isRun;
     public float jumpPower;
     public float fallMultiplier;
     public float gravityMultiplier;
@@ -61,7 +63,15 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
 
-        dir *= moveSpeed;
+        if (isRun)
+        {
+            dir *= runSpeed;
+        }
+        else
+        {
+            dir *= moveSpeed;
+        }
+
         dir.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = dir;
@@ -85,6 +95,18 @@ public class PlayerController : MonoBehaviour
         else if (context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
+        }
+    }
+
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            isRun = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            isRun = false;
         }
     }
 
