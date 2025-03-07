@@ -5,35 +5,44 @@ using UnityEngine.InputSystem;
 
 public class ItemUse : MonoBehaviour
 {
+    public UIItemSlot[] slots;
     public ItemData healingPotion;
     public ItemData speedPotion;
+
     private float heal;
     private float speed;
+    private bool isUsePotion;
 
     public void UseHealingPotion()
     {
-        if(healingPotion != null && healingPotion.Available.Length > 0)
+        isUsePotion = true;
+
+        if (healingPotion != null && healingPotion.Available.Length > 0)
         {
             heal = healingPotion.Available[0].value;
         }
 
+        slots[0].UsePotion(healingPotion);
         CharacterManager.Instance.Player.uiItem.UseItem(healingPotion);
         CharacterManager.Instance.Player.condition.Heal(heal);
+
+        isUsePotion = false;
     }
 
     public void UseSpeedPotion()
     {
+        isUsePotion = true;
+
         if (speedPotion != null && speedPotion.Available.Length > 0)
         {
             speed = speedPotion.Available[0].value;
         }
 
-        CharacterManager.Instance.Player.controller.isUsePotion = true;
-
+        slots[1].UsePotion(speedPotion);
         CharacterManager.Instance.Player.uiItem.UseItem(speedPotion);
         StartCoroutine(SpeedUpTime(speed));
 
-        CharacterManager.Instance.Player.controller.isUsePotion = false;
+        isUsePotion = false;
     }
 
     public void OnUseItem(InputAction.CallbackContext context)
@@ -42,11 +51,17 @@ public class ItemUse : MonoBehaviour
         {
             if (Keyboard.current.eKey.isPressed)
             {
-                UseHealingPotion();
+                if (slots[0].stackCount > 0)
+                {
+                    UseHealingPotion();
+                }
             }
-            else if (Keyboard.current.rKey.isPressed && !CharacterManager.Instance.Player.controller.isUsePotion)
+            else if (Keyboard.current.rKey.isPressed && !isUsePotion)
             {
-                UseSpeedPotion();
+                if (slots[1].stackCount > 0)
+                {
+                    UseSpeedPotion();
+                }
             }
         }
     }

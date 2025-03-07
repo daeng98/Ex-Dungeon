@@ -14,7 +14,6 @@ public class UIItem : MonoBehaviour
             {
                 slot.stackCount = Mathf.Min(slot.stackCount + amount, data.maxStackAmount);
                 slot.UpdateUI();
-                Debug.Log($"{data.displayName} È¹µæ : {slot.stackCount} °³");
                 return;
             }
         }
@@ -28,7 +27,6 @@ public class UIItem : MonoBehaviour
             {
                 slot.stackCount--;
                 slot.UpdateUI();
-                Debug.Log($"{data.displayName} »ç¿ë : {slot.stackCount} °³");
                 return true;
             }
         }
