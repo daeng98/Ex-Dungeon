@@ -33,7 +33,15 @@ public class PlayerCondition : MonoBehaviour
 
     public void Heal(float amout)
     {
-        health.Add(amout);
+        if(health.curValue < health.maxValue)
+        {
+            health.Add(amout);
+
+            if(health.curValue >= health.maxValue)
+            {
+                health.curValue = health.maxValue;
+            }
+        }
     }
 
     public void Die()
@@ -50,6 +58,11 @@ public class PlayerCondition : MonoBehaviour
 
         stamina.Subtract(amout);
         return true;
+    }
+
+    public float curHealth()
+    {
+        return health.curValue;
     }
 
     public float curStamina()

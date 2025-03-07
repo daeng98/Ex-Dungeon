@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed;
     public float runSpeed;
     public bool isRun;
+    public bool isUsePotion;
     public float runStamina;
     public float jumpPower;
     public float needStamina;
