@@ -1160,6 +1160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 608377361}
   - component: {fileID: 608377363}
+  - component: {fileID: 608377372}
   - component: {fileID: 608377365}
   - component: {fileID: 608377364}
   - component: {fileID: 608377367}
@@ -1167,7 +1168,6 @@ GameObject:
   - component: {fileID: 608377368}
   - component: {fileID: 608377369}
   - component: {fileID: 608377371}
-  - component: {fileID: 608377372}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1183,14 +1183,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608377360}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 4.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291776920}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!54 &608377363
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1234,9 +1234,9 @@ MonoBehaviour:
   runSpeed: 10
   isRun: 0
   runStamina: 1
-  jumpPower: 250
+  jumpPower: 270
   needStamina: 10
-  fallMultiplier: 10
+  fallMultiplier: 50
   gravityMultiplier: 5
   groundLayerMask:
     serializedVersion: 2

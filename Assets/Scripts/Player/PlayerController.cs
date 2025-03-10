@@ -29,11 +29,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     private Rigidbody _rigidbody;
+    private Animator _animator;
     private Coroutine staminaCoroutine;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Start()
@@ -63,6 +65,11 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
+        if (IsGrounded())
+        {
+            _animator.SetBool("isJump", false);
+        }
+
         Vector3 cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0;
 
@@ -147,6 +154,7 @@ public class PlayerController : MonoBehaviour
         {
             if (CharacterManager.Instance.Player.condition.curStamina() >= needStamina)
             {
+                _animator.SetBool("isJump", true);
                 _rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 
                 CharacterManager.Instance.Player.condition.UseStamina(needStamina);
@@ -160,7 +168,7 @@ public class PlayerController : MonoBehaviour
         Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
 
         bool groundCheck = Physics.CheckSphere(checkPosition, checkRadius, groundLayerMask);
-        return groundCheck && _rigidbody.velocity.y <= -0f;
+        return groundCheck && _rigidbody.velocity.y <= 0f;
     }
 
     private IEnumerator UseStaminaTime()
