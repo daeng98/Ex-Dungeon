@@ -49,7 +49,7 @@ public class ItemUse : MonoBehaviour
     {
         if (context.performed)
         {
-            if (Keyboard.current.eKey.isPressed)
+            if (Keyboard.current.eKey.isPressed && !isUsePotion)
             {
                 if (slots[0].stackCount > 0)
                 {
