@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 
 public class Interaction : MonoBehaviour
 {
-    public float checkRate = 0.05f;
-    private float lastCheckTime;
-    public float maxCheckDistance;
     public LayerMask layerMask;
 
     public GameObject curInteractGameObject;
@@ -22,30 +19,25 @@ public class Interaction : MonoBehaviour
         cam = Camera.main;
     }
 
-    private void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Time.time - lastCheckTime > checkRate)
+        if (((1 << other.gameObject.layer) & layerMask) != 0)
         {
-            lastCheckTime = Time.time;
+            curInteractable = other.GetComponent<IInteractable>();
 
-            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
-            RaycastHit hit;
+            if (curInteractable != null)
+            {
+                SetPromptText();
+            }
+        }
+    }
 
-            if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
-            {
-                if (hit.collider.gameObject != curInteractGameObject)
-                {
-                    curInteractGameObject = hit.collider.gameObject;
-                    curInteractable = hit.collider.GetComponent<IInteractable>();
-                    SetPromptText();
-                }
-            }
-            else
-            {
-                curInteractGameObject = null;
-                curInteractable = null;
-                promptText.gameObject.SetActive(false);
-            }
+    private void OnTriggerExit(Collider other)
+    {
+        if (curInteractable != null)
+        {
+            curInteractable = null;
+            promptText.gameObject.SetActive(false);
         }
     }
 

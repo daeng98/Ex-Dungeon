@@ -13,18 +13,20 @@ public class PlayerController : MonoBehaviour
     public float jumpPower;
     public float needStamina;
     public float fallMultiplier;
-    public float gravityMultiplier;
-    private Vector2 curMovementInput;
+    public float gravityMultiplier;    
     public LayerMask groundLayerMask;
 
     [Header("Look")]
-    public Transform cameraContainer;
-    public float minXLook;
-    public float maxXLook;
-    private float camCurXRot;
-    public float lookSensitivity;
-    private Vector2 mouseDelta;
-    public bool canLook = true;
+    public Transform cameraTransform;
+    public float cameraDistance;
+    public float cameraHeight;
+    public float cameraSensitivity;
+
+    private float camYaw;
+    private float camPitch;
+
+    private Vector2 lookInput;
+    private Vector2 moveInput;
 
     private Rigidbody _rigidbody;
     private Coroutine staminaCoroutine;
@@ -56,48 +58,56 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (canLook)
-        {
-            CameraRotate();
-        }
+        CameraRotate();
     }
 
     private void Move()
     {
-        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        cameraForward.y = 0;
 
-        if (isRun)
+        Vector3 cameraRight = Camera.main.transform.right;
+        cameraRight.y = 0;
+
+        // 입력값을 바탕으로 이동 방향 계산
+        Vector3 moveDirection = (cameraForward * moveInput.y + cameraRight * moveInput.x).normalized;
+
+        // 플레이어가 이동할 때 그 방향을 바라보도록 회전
+        if (moveDirection != Vector3.zero)
         {
-            dir *= runSpeed;
-        }
-        else
-        {
-            dir *= moveSpeed;
+            transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * 10f);
         }
 
-        dir.y = _rigidbody.velocity.y;
+        // 속도 적용 (걷기 / 뛰기)
+        float speed = isRun ? runSpeed : moveSpeed;
+        Vector3 velocity = moveDirection * speed;
+        velocity.y = _rigidbody.velocity.y;
 
-        _rigidbody.velocity = dir;
+        _rigidbody.velocity = velocity;
     }
 
     void CameraRotate()
     {
-        camCurXRot += mouseDelta.y * lookSensitivity;
-        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-        cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
+        camYaw += lookInput.x * cameraSensitivity;
+        camPitch -= lookInput.y * cameraSensitivity;
+        camPitch = Mathf.Clamp(camPitch, -30f, 60f);
 
-        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+        Quaternion rotation = Quaternion.Euler(camPitch, camYaw, 0);
+        Vector3 offset = new Vector3(0, cameraHeight, -cameraDistance);
+
+        cameraTransform.position = transform.position + rotation * offset;
+        cameraTransform.LookAt(transform.position + Vector3.up * 1.5f);
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            curMovementInput = context.ReadValue<Vector2>();
+            moveInput = context.ReadValue<Vector2>();
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            curMovementInput = Vector2.zero;
+            moveInput = Vector2.zero;
         }
     }
 
@@ -128,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        mouseDelta = context.ReadValue<Vector2>();
+        lookInput = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -146,7 +156,11 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        return Physics.SphereCast(transform.position, 0.5f, Vector3.down, out _, 1.6f, groundLayerMask);
+        float checkRadius = 0.8f;
+        Vector3 checkPosition = transform.position + Vector3.down * 0.1f;
+
+        bool groundCheck = Physics.CheckSphere(checkPosition, checkRadius, groundLayerMask);
+        return groundCheck && _rigidbody.velocity.y <= -0f;
     }
 
     private IEnumerator UseStaminaTime()
