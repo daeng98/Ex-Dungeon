@@ -12,16 +12,10 @@ public class Interaction : MonoBehaviour
     private IInteractable curInteractable;
 
     public TextMeshProUGUI promptText;
-    private Camera cam;
-
-    private void Start()
-    {
-        cam = Camera.main;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (((1 << other.gameObject.layer) & layerMask) != 0)
+        if (other.gameObject.CompareTag("Interactable"))
         {
             curInteractable = other.GetComponent<IInteractable>();
 

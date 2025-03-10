@@ -97,8 +97,7 @@ public class PlayerController : MonoBehaviour
     {
         camYaw += lookInput.x * cameraSensitivity;
         camPitch -= lookInput.y * cameraSensitivity;
-        camPitch = Mathf.Clamp(camPitch, -30f, 60f);
-        camPitch = Mathf.Max(camPitch, -8.6f);
+        camPitch = Mathf.Clamp(camPitch, -8.6f, 60f);
 
         Quaternion rotation = Quaternion.Euler(camPitch, camYaw, 0);
         Vector3 offset = new Vector3(0, cameraHeight, -cameraDistance);
@@ -165,10 +164,8 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        float checkRadius = 0.8f;
-        Vector3 checkPosition = transform.position + Vector3.down * 0.5f;
-
-        bool groundCheck = Physics.CheckSphere(checkPosition, checkRadius, groundLayerMask);
+        float checkRadius = 1f;
+        bool groundCheck = Physics.CheckSphere(transform.position, checkRadius, groundLayerMask);
         return groundCheck && _rigidbody.velocity.y <= 0f;
     }
 

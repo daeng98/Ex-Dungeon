@@ -392,6 +392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platforms
       objectReference: {fileID: 0}
+    - target: {fileID: 1892832670741246517, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
     - target: {fileID: 3098126447683858241, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -431,6 +435,18 @@ PrefabInstance:
     - target: {fileID: 3098126447683858241, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635106429917119227, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 7323596579649601067, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8098859179792764833, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
+      propertyPath: m_TagString
+      value: Interactable
       objectReference: {fileID: 0}
     - target: {fileID: 8921848131503466685, guid: d904a6a3c672c7344a308a9da54d6aaa, type: 3}
       propertyPath: m_Name
