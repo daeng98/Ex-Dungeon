@@ -22,6 +22,7 @@ public class ItemUse : MonoBehaviour
             heal = healingPotion.Available[0].value;
         }
 
+        // 체력 포션 사용 플레이어의 체력을 회복 시켜줌
         slots[0].UsePotion(healingPotion);
         CharacterManager.Instance.Player.uiItem.UseItem(healingPotion);
         CharacterManager.Instance.Player.condition.Heal(heal);
@@ -38,6 +39,7 @@ public class ItemUse : MonoBehaviour
             speed = speedPotion.Available[0].value;
         }
 
+        // 속도 포션 사용 코루틴을 통해 10초간 속도 증가됨
         slots[1].UsePotion(speedPotion);
         CharacterManager.Instance.Player.uiItem.UseItem(speedPotion);
         StartCoroutine(SpeedUpTime(speed));
@@ -47,6 +49,7 @@ public class ItemUse : MonoBehaviour
 
     public void OnUseItem(InputAction.CallbackContext context)
     {
+        // 해당 키가 입력되고 조건문을 통과하면 포션 사용
         if (context.performed)
         {
             if (Keyboard.current.eKey.isPressed && !isUsePotion)
@@ -68,6 +71,7 @@ public class ItemUse : MonoBehaviour
 
     IEnumerator SpeedUpTime(float amout)
     {
+        // 속도 증가 10초 지속 후 다시 원상태로 복구
         CharacterManager.Instance.Player.controller.moveSpeed += amout;
         CharacterManager.Instance.Player.controller.runSpeed += amout;
 

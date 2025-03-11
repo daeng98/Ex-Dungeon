@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         Move();
 
+        // 점프가 뭔가 천천히 올라갔다 떨어지는 것 같아서 각각 다른 변수를 사용하여 해당 값을 조절했음
         if (_rigidbody.velocity.y > 0)
         {
             _rigidbody.velocity += Vector3.down * gravityMultiplier * Time.fixedDeltaTime;
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        // 타임스케일 0일때는 카메라 회전 x
         if (Time.timeScale == 0) return;
 
         CameraRotate();
