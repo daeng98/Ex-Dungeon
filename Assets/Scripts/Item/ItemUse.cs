@@ -51,14 +51,14 @@ public class ItemUse : MonoBehaviour
         {
             if (Keyboard.current.eKey.isPressed && !isUsePotion)
             {
-                if (slots[0].stackCount > 0)
+                if (slots[0].stackCount > 0 && !slots[0].isCooldownActive)
                 {
                     UseHealingPotion();
                 }
             }
             else if (Keyboard.current.rKey.isPressed && !isUsePotion)
             {
-                if (slots[1].stackCount > 0)
+                if (slots[1].stackCount > 0 && !slots[0].isCooldownActive)
                 {
                     UseSpeedPotion();
                 }
