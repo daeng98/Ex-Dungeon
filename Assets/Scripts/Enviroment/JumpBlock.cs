@@ -8,6 +8,7 @@ public class JumpBlock : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // 태그가 플레이어면 jumpForce 만큼 impulse
         if (other.CompareTag("Player"))
         {
             Rigidbody player = other.GetComponent<Rigidbody>();

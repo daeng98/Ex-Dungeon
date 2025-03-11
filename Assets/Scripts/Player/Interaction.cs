@@ -15,6 +15,7 @@ public class Interaction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Interactable 태그 되면 정보텍스트 출력
         if (other.gameObject.CompareTag("Interactable"))
         {
             curInteractable = other.GetComponent<IInteractable>();
@@ -28,6 +29,7 @@ public class Interaction : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // 가날때는 꺼줌
         if (curInteractable != null)
         {
             curInteractable = null;
@@ -43,6 +45,7 @@ public class Interaction : MonoBehaviour
 
     public void OnInteractInput(InputAction.CallbackContext context)
     {
+        // 키 입력 시 해당 오브젝트 획득
         if (context.phase == InputActionPhase.Started && curInteractable != null)
         {
             curInteractable.OnInteract();

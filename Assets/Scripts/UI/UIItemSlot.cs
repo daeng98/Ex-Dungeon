@@ -23,19 +23,19 @@ public class UIItemSlot : MonoBehaviour
     {
         if (itemData == null)
         {
-            Debug.LogError("itemData가 null입니다");
+            Debug.LogError("itemData null");
             return;
         }
 
         if (isCooldownActive || stackCount <= 0)
         {
-            Debug.LogError($"사용 불가 stackCount: {stackCount}, isCooldownActive: {isCooldownActive}");
+            Debug.LogError($"사용 불가");
             return;
         }
 
         foreach (var available in itemData.Available)
         {
-
+            // 타입에 따라 쿨타임 지속시간 코루틴 실행
             if (available.type == AvailableType.Health)
             {
                 cooldownTime = 10f;
@@ -62,6 +62,7 @@ public class UIItemSlot : MonoBehaviour
         {
             cooldownText.text = cooldownTime.ToString();
 
+            // 쿨타임에 따라 이미지 색상 변경
             float t = 1 - (cooldownTime / maxCooldown);
             itemImage.color = Color.Lerp(cooldownColor, Color.white, t);
 

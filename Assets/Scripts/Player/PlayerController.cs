@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // 씬 로드 시 자동으로 커서 숨겨주고 타임스케일 1
         Time.timeScale = 1;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
 
     void CameraRotate()
     {
+        // 카메라가 플레이어를 바라보도록 설정 + 오프셋을 활용하여 줌인 줌아웃 가능
         camYaw += lookInput.x * cameraSensitivity;
         camPitch -= lookInput.y * cameraSensitivity;
         camPitch = Mathf.Clamp(camPitch, -8.6f, 60f);
@@ -141,6 +143,7 @@ public class PlayerController : MonoBehaviour
         {
             isRun = true;
 
+            // 혹시 몰라 코루틴이 있으면 멈춰줌
             if (staminaCoroutine != null)
             {
                 StopCoroutine(staminaCoroutine);
@@ -177,6 +180,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        // 땅에 있고 스태미나가 충분하면 실행
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             if (CharacterManager.Instance.Player.condition.curStamina() >= needStamina)
@@ -191,13 +195,16 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
+        // CheckSphere를 통해 구 형태로 체크
         float checkRadius = 1f;
         bool groundCheck = Physics.CheckSphere(transform.position, checkRadius, groundLayerMask);
+        // 더블 점프 방지를 위해 속도에 대한 조건문 추가했음
         return groundCheck && _rigidbody.velocity.y <= 0f;
     }
 
     private IEnumerator UseStaminaTime()
     {
+        // 키 눌르고 있는 동안 계속 스태미나 소비하게 설정
         while (isRun)
         {
             CharacterManager.Instance.Player.condition.UseStamina(runStamina);

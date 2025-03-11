@@ -30,11 +30,13 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        // 시작 시간 체크
         startTime = Time.time;
     }
 
     private void Update()
     {
+        // 인게임에 진행 시간 설정
         if (inGameTimerText != null)
         {
             float elapsedTime = CheckTime();
@@ -46,11 +48,13 @@ public class Player : MonoBehaviour
 
     public float CheckTime()
     {
+        // 진행 시간 반환
         return Time.time - startTime;
     }
 
     public void ShowResult()
     {
+        // 결과창 텍스트 플레이어 현재체력에 따라 변경
         float playerCurHealth = condition.curHealth();
 
         if (playerCurHealth <= 0f)
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
             ResultText.text = "Clear";
         }
 
+        // 타임스케일 0 해주고 마우스 보이게함 결과창ui 띄어줌
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -75,11 +80,13 @@ public class Player : MonoBehaviour
 
     public void RestartGame()
     {
+        // 다시하기 눌렀을때 씬 다시 불러옴
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ExitGame()
     {
+        //나가기 버튼 눌렀을때 꺼지게 설정
         Application.Quit();
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
