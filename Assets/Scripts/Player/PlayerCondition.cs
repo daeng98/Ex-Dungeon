@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerCondition : MonoBehaviour
 {
     public UICondition uiCondition;
+    public GameObject uiResult;
 
     Condition health { get { return uiCondition.health; } }
     Condition stamina { get { return uiCondition.stamina; } }
 
     public float healthDecay;
+    public float time;
 
     void Update()
     {
@@ -25,7 +27,7 @@ public class PlayerCondition : MonoBehaviour
             CharacterManager.Instance.Player.controller.isRun = false;
         }
 
-        if (health.curValue == 0f)
+        if (health.curValue <= 0f)
         {
             Die();
         }
@@ -46,7 +48,7 @@ public class PlayerCondition : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("die");
+        CharacterManager.Instance.Player.ShowResult();
     }
 
     public bool UseStamina(float amout)

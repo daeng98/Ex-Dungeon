@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +23,11 @@ public class PlayerController : MonoBehaviour
     public float cameraHeight;
     public float cameraSensitivity;
 
+    [Header("Zoom")]
+    public float zoomSpeed;
+    public float minZoom;
+    public float maxZoom;
+
     private float camYaw;
     private float camPitch;
 
@@ -36,10 +42,19 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void Start()
+    private void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -60,6 +75,8 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (Time.timeScale == 0) return;
+
         CameraRotate();
     }
 
@@ -146,6 +163,16 @@ public class PlayerController : MonoBehaviour
     public void OnLook(InputAction.CallbackContext context)
     {
         lookInput = context.ReadValue<Vector2>();
+    }
+
+    public void OnZoom(InputAction.CallbackContext context)
+    {
+        // 마우스 휠 값 받아옴 (위아래 스크롤 사용을 위해 y 값 받아옴)
+        float scrollInput = context.ReadValue<Vector2>().y;
+        cameraDistance -= scrollInput * zoomSpeed;
+
+        // 줌 거리 제한
+        cameraDistance = Mathf.Clamp(cameraDistance, minZoom, maxZoom);
     }
 
     public void OnJump(InputAction.CallbackContext context)

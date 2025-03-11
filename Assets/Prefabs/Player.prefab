@@ -210,6 +210,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3670a371-120c-4f73-9daf-915f5a1bf6d6
     m_ActionName: Player/Interaction[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2136044283056336420}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnZoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 02ac912e-a4fb-4fe1-9725-7454a38e4642
+    m_ActionName: Player/Zoom[/Mouse/scroll]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -237,11 +253,14 @@ MonoBehaviour:
   gravityMultiplier: 5
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 64
   cameraTransform: {fileID: 0}
   cameraDistance: 5
   cameraHeight: 2
   cameraSensitivity: 0.1
+  zoomSpeed: 0.002
+  minZoom: 2
+  maxZoom: 6
 --- !u!114 &7856710956451389043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +277,10 @@ MonoBehaviour:
   condition: {fileID: 0}
   uiItem: {fileID: 0}
   itemData: {fileID: 0}
+  uiResult: {fileID: 0}
+  timeText: {fileID: 0}
+  inGameTimerText: {fileID: 0}
+  ResultText: {fileID: 0}
 --- !u!114 &5020539589352193591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +294,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCondition: {fileID: 0}
+  uiResult: {fileID: 0}
   healthDecay: 2
+  time: 0
 --- !u!114 &4330236383642980666
 MonoBehaviour:
   m_ObjectHideFlags: 0

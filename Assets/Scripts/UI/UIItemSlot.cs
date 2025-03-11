@@ -50,7 +50,6 @@ public class UIItemSlot : MonoBehaviour
             }
         }
 
-        stackCount--;
         UpdateUI();
     }
 
