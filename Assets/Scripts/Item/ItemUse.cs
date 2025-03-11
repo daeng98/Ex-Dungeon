@@ -61,7 +61,7 @@ public class ItemUse : MonoBehaviour
             }
             else if (Keyboard.current.rKey.isPressed && !isUsePotion)
             {
-                if (slots[1].stackCount > 0 && !slots[0].isCooldownActive)
+                if (slots[1].stackCount > 0 && !slots[1].isCooldownActive)
                 {
                     UseSpeedPotion();
                 }
